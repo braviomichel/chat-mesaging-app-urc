@@ -1,4 +1,11 @@
 import {CustomError} from "./CustomError";
+import moment from 'moment';
+export const formatTimestamp = (timestamp: EpochTimeStamp) => {
+    return moment(timestamp).format('DD/MM/YYYY HH:mm');
+  };
+
+ 
+  
 
 export const AUTHENT_HEADER = "Authentication";
 export const BEARER = "Bearer ";
@@ -10,6 +17,16 @@ export interface User {
     password: string;
     last_login?: string;
     external_id?: string;
+}
+export interface Account {
+    username: string;
+    email?: string;
+    password: string;
+}
+export interface UserInfos {
+    username: string;
+    userId : number;
+    last_login?: EpochTimeStamp;
 }
 
 export interface Session {
@@ -33,3 +50,33 @@ export interface ErrorCallback {
     (error: CustomError): void;
 }
 
+export interface Message {
+    senderId: number;
+    receiverId: number;
+    messageContent: string;
+    timestamp?: EpochTimeStamp;
+    senderName: string;
+}
+export interface MessageInfos {
+    senderId: number;
+    receiverId: number;
+    }
+
+    export interface SaloonInfos {
+        roomId: number;
+        roomName: string;
+        senderID?: number;
+        }
+export interface NewSaloon {
+    creatorID: number;
+   roomName: string;
+            }
+ export interface SaloonMessage {
+            roomId: number;
+            roomName: string;
+            senderId : number;
+            messageContent: string;
+            timestamp?: EpochTimeStamp;
+            senderName : string;
+
+        }
