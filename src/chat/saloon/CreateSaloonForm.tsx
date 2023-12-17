@@ -98,6 +98,8 @@ const dispatch= useDispatch();
         newSaloon,
         (result: boolean) => {
           if (result === true) {
+            dispatch(setnewSALON());
+
             setSaloonName('');
             setSelectedUsers([]);
             setError(new CustomError(''));

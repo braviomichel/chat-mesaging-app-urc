@@ -60,7 +60,7 @@ const SaloonsList = () => {
         setError(loginError);
       }
     );
-  }, [newSALONSelector]);
+  }, [newsal,userInfos]);
 
   const handleClick=(id: number, name : string) => {
     navigate(`/home/saloon/${name}/${id}`);    
