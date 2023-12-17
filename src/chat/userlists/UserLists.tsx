@@ -7,6 +7,9 @@ import { UserInfos } from '../../model/common';
 import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 import { useNavigate } from 'react-router-dom';
 import { formatTimestamp } from '../../model/common';
+import { setList } from '../../features/userlistSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../app/store';
 import {
   Box,
   List,
@@ -20,13 +23,12 @@ const UserLists = () => {
   const userInfos = useSelector(userInfosSelector);
   const [usersList, setUsersList] = useState<UserInfos[]>([]);
   const [error, setError] = useState({} as CustomError);
-
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     console.log("loading userInfos...");
-    console.log(userInfos);
 
-  }, [userInfos]);
+  }, [userInfos, dispatch], );
 
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const UserLists = () => {
 
         setError(new CustomError(""));
         setUsersList(result);
+        dispatch(setList(result));
       },
       (loginError: CustomError) => {
         console.log(loginError);

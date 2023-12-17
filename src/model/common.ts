@@ -4,7 +4,10 @@ export const formatTimestamp = (timestamp: EpochTimeStamp) => {
     return moment(timestamp).format('DD/MM/YYYY HH:mm');
   };
 
- 
+ export interface NotifToken{
+    interest :string;
+    message : string;
+ }
   
 
 export const AUTHENT_HEADER = "Authentication";
@@ -70,6 +73,7 @@ export interface MessageInfos {
 export interface NewSaloon {
     creatorID: number;
    roomName: string;
+   usersList? : number[];
             }
  export interface SaloonMessage {
             roomId: number;

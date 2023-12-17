@@ -14,13 +14,13 @@ export const saloonSlice = createSlice({
        
         setCounter : (state)=>{
             state.counter = state.counter +1;
-        }
+        },
+        
     },
     
 });
 
-export const { setCounter} = saloonSlice.actions;
+export const { setCounter  } = saloonSlice.actions;
 
 export const saloonCounter = (state: RootState) => state.saloon.counter;
-
 export default saloonSlice.reducer;

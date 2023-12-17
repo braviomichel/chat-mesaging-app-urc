@@ -17,8 +17,12 @@ import {
 import CreateSaloonForm from './CreateSaloonForm';
 const SaloonsList = () => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (nature : boolean) => {
+    setPrivateSaloon(nature);
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
+  const [privateSaloon,setPrivateSaloon] = useState(false);
 
   const navigate = useNavigate();
 
@@ -27,7 +31,12 @@ const SaloonsList = () => {
   const [saloonList, setSaloonList] = useState<SaloonInfos[]>([]);
   const [error, setError] = useState({} as CustomError);
 
-
+  const testprivate = [
+    { roomId: 1, roomName: 'Salle de discussion 1' },
+    { roomId: 2, roomName: 'Privée 001' },
+    { roomId: 3, roomName: 'Famille' },
+  ];
+  
   useEffect(() => {
     console.log("loading userInfos...");
     console.log(userInfos);
@@ -57,7 +66,8 @@ const SaloonsList = () => {
   }
 
   const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
+    // as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -69,12 +79,13 @@ const SaloonsList = () => {
   };
   return (
     <>
+<Box sx={{ display: 'flex', flexDirection: 'column'  }}>
 
 <Box >
-<Stack direction="row" alignItems="center" spacing={2} justifyContent="flex-end">
+<Stack direction="column" alignItems="center">
   <Typography variant="h6" textAlign="center">Salons textuels</Typography>
   <Button variant="contained" color="primary" 
-  //onClick={handleCreateSalon}
+  onClick={() => handleOpen (false )}
   >
     Créer
   </Button>
@@ -92,20 +103,44 @@ const SaloonsList = () => {
     </List>
     {error.message && <span>{error.message}</span>}
   </Box>
-
-
+  <Box >
+<Stack direction="column" alignItems="center"  >
+  <Typography variant="h6" textAlign="center">Salons Privés</Typography>
+  <Button variant="contained" color="primary" 
+  onClick={() => handleOpen (true )}
+  >
+    Créer
+  </Button>
+</Stack>    <List>
+      {testprivate.length > 0 ? (
+        testprivate.map((saloon, index) => (
+          <ListItemButton key={index} onClick={() => handleClick(saloon.roomId, saloon.roomName)}>
+            <ListItemIcon><CameraRoundedIcon/></ListItemIcon>
+            <ListItemText primary={saloon.roomName} />
+          </ListItemButton>
+        ))
+      ) : (
+        <Typography variant="body2">Pas de salons</Typography>
+      )}
+    </List>
+    {error.message && <span>{error.message}</span>}
+  </Box>
+</Box>
 
   <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+
         <Box sx={style}>
+        <Typography variant="h6" noWrap component="div">
+        Creer un Salon   {privateSaloon? "Privé" : "Public"}       
+  </Typography>
           
-          <CreateSaloonForm  usersList={[]}/>
+          <CreateSaloonForm  privateSaloon={privateSaloon}/>
         </Box>
       </Modal>
     </div>

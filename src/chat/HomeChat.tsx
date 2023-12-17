@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userInfosSelector } from '../features/loginSlice';
 import UserLists from './userlists/UserLists';
-//import MessageForm from './messages/MessageForm';
 import { messageReceiverSelector } from '../features/messageSlice';
 import SaloonsList from './saloon/SaloonsList';
 import Box from '@mui/material/Box';
@@ -17,12 +16,19 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../app/store";
 import { setLogout } from '../features/loginSlice';
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+
+ 
+
+
 const HomeChat = () => {
+ 
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const receiverId = useSelector(messageReceiverSelector);
   const userInfos = useSelector(userInfosSelector);
-
   useEffect(() => {
     //  console.log("loading userInfos...");
     console.log(userInfos);
@@ -34,7 +40,19 @@ const HomeChat = () => {
 
     dispatch(setLogout());
     navigate("/");
-  }
+  } 
+
+  const beamsClient = new PusherPushNotifications.Client({
+    instanceId: '14e90d90-e252-466d-a7f7-80087f6f7deb',
+  });
+  
+  beamsClient.start().then(() => beamsClient.addDeviceInterest(userInfos.userId.toString()))
+  .then(() => console.log('Successfully registered and subscribed! ' + userInfos.userId))
+  .catch(console.error);
+
+//  const interest : NotifToken = {interest:userInfos.userId.toString()}
+
+
 
   return (
     <>

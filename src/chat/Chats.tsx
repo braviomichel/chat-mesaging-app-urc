@@ -11,7 +11,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import { CssBaseline, AppBar, Typography, Toolbar, IconButton } from '@mui/material';
+import { CssBaseline, AppBar, Typography, Toolbar, IconButton, Container } from '@mui/material';
 import { Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
@@ -68,6 +68,7 @@ const Chats = () => {
             '& .MuiDrawer-paper': {
               width: drawerWidth1,
               boxSizing: 'border-box',
+              marginLeft: '128px',
             },
           }}
           variant="permanent"
@@ -117,8 +118,7 @@ const Chats = () => {
         </Box>
 
       </Box>
-
-    </>
+          </>
   );
 };
 

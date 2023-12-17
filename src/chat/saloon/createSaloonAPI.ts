@@ -8,7 +8,7 @@ export function createSaloon(newsaloon : NewSaloon, onResult: (success: boolean)
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ newsaloon}),
+            body: JSON.stringify( newsaloon),
 
         })
         .then(async (response) => {
@@ -23,4 +23,29 @@ export function createSaloon(newsaloon : NewSaloon, onResult: (success: boolean)
 
               }
         }, onError);
+}
+
+
+export function createSaloonPrivate(newsaloon : NewSaloon, onResult: (success: boolean) => void, onError: ErrorCallback) {  
+  fetch("/api/createprivatesaloon",
+    {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newsaloon}),
+
+    })
+    .then(async (response) => {
+        if (response.ok) {
+           
+          
+            onResult(true);
+          } else {
+            const error = await response.json() as CustomError;
+            onError(error);
+            onResult(false); 
+
+          }
+    }, onError);
 }

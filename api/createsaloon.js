@@ -7,7 +7,7 @@ export const config = {
 export default async function handler(request) {
   try {
     const {  creatorID, roomName } = await request.json();
-
+console.log(creatorID, roomName);
     // Vérifier que tous les champs sont bien renseignés
     if (!roomName || !creatorID) {
       const error = { code: "BAD_REQUEST", message: "Tous les champs doivent être renseignés" };
@@ -17,11 +17,7 @@ export default async function handler(request) {
       });
     }
 
-  
-
-    // Hasher le mot de passe
-   
-
+    const client = await db.connect();
     // Enregistrer le nouvel utilisateur en base de données
     const newSaloonQuery = await client.sql`INSERT INTO rooms (name, created_on,created_by) VALUES (${roomName}, now(), ${creatorID}) RETURNING *`;
     const newUser = newSaloonQuery.rows[0];

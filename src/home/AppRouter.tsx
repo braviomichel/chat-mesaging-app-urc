@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import Home from './Home';
 import NotFound from './NotFound';
 import {Login} from "../user/Login";
@@ -44,6 +43,7 @@ const AppRouter = () => {
         <Route path="/home" element={<HomeChat/>} />
         <Route path="/home/user/:receiverName/:receiverId" element={<Chats />} />
         <Route path="/home/saloon/:saloonName/:saloonID" element={<SaloonChats />} />
+
 
         <Route path="*" element={<NotFound />} />
 

@@ -3,28 +3,25 @@ import { useSelector } from 'react-redux';
 import { userInfosSelector } from '../../features/loginSlice';
 import { CustomError } from '../../model/CustomError';
 import { Message, SaloonMessage } from '../../model/common';
-import { addMessage,addSaloonMessage } from './addMessagesAPI';
+import { addMessage,addSaloonMessage, sendnotification } from './addMessagesAPI';
 import {  Grid, Paper, TextField, IconButton } from '@mui/material';
 import { setnewMSG } from '../../features/messageSlice';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../app/store";
 import { setCounter } from '../../features/saloonSlice';
 import SendIcon from '@mui/icons-material/Send';
-
+import { NotifToken } from '../../model/common';
 
 const MessageForm : React.FC<{ receiverId: number , saloonId : number, saloonName : string}> = ({ receiverId, saloonId, saloonName }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  //const receiverId = useSelector(messageReceiverSelector);
-  //const choice = useSelector(choiceSelector);
+ 
   const userInfos = useSelector(userInfosSelector);
   const [messageSent, setMessageSent] = useState('');
   const [error, setError] = useState({} as CustomError);
-  //const saloonId = useSelector(saloonSelector);
-  //const saloonName= useSelector(saloonNameSelector);
- 
 
-  
+
+   
 
   useEffect(() => {
     // console.log('loading userInfos...');
@@ -61,7 +58,27 @@ if(receiverId !== -1) {
       console.log(messageError);
       setError(messageError);
     }
+  ); 
+
+  const interest : NotifToken = {interest:message.receiverId.toString(),message : message.messageContent}
+
+  sendnotification( interest,
+    (result: boolean) => {
+      if (result === true) {
+      console.log('rd');
+       
+      } else {
+        console.error('La création de notif a échoué.');
+      }
+    },
+    (messageError: CustomError) => {
+      console.log(messageError);
+     
+    }
   );
+
+
+
 }else if ( saloonId!==-1){
   const saloonmessage: SaloonMessage = {
     senderId: userInfos.userId,
