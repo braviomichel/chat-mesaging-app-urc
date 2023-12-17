@@ -14,10 +14,11 @@ import { userInfosSelector } from '../../features/loginSlice';
 import { useSelector } from 'react-redux';
 import { CustomError } from '../../model/CustomError';
 import { userListSelector } from '../../features/userlistSlice';
-
+import { useDispatch } from 'react-redux';
+import {  setnewSALON } from '../../features/saloonSlice';
 
 const CreateSaloonForm: React.FC<{ privateSaloon: boolean }> = ({ privateSaloon }) => {
-
+const dispatch= useDispatch();
   const userInfos = useSelector(userInfosSelector);
   const [error, setError] = useState({} as CustomError);
   const usersList = useSelector(userListSelector);
@@ -65,6 +66,7 @@ const CreateSaloonForm: React.FC<{ privateSaloon: boolean }> = ({ privateSaloon 
         newSaloon,
         (result: boolean) => {
           if (result === true) {
+            dispatch(setnewSALON());
             setSaloonName('');
             setSelectedUsers([]);
             setError(new CustomError(''));

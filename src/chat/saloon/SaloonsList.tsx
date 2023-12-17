@@ -15,6 +15,7 @@ import {
     Typography, Stack, Button, Modal
   } from '@mui/material';
 import CreateSaloonForm from './CreateSaloonForm';
+import { newSALONSelector } from '../../features/saloonSlice';
 const SaloonsList = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = (nature : boolean) => {
@@ -23,7 +24,7 @@ const SaloonsList = () => {
   };
   const handleClose = () => setOpen(false);
   const [privateSaloon,setPrivateSaloon] = useState(false);
-
+  const newsal= useSelector(newSALONSelector);
   const navigate = useNavigate();
 
   const userInfos = useSelector(userInfosSelector);
@@ -59,7 +60,7 @@ const SaloonsList = () => {
         setError(loginError);
       }
     );
-  }, []);
+  }, [newSALONSelector]);
 
   const handleClick=(id: number, name : string) => {
     navigate(`/home/saloon/${name}/${id}`);    
